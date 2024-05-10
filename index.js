@@ -1,29 +1,14 @@
-const http = require('http');
+const express = require('express');
 const path = require('path');
-const fs = require('fs');
 
-const host = '127.0.0.1';
+const app = express();
 const port = 8080;
 
-const plik = __dirname + '\\index.html';
+app.use(express.urlencoded({extended: false}));
+app.use(express.static(path.join(__dirname,'public')));
 
-function odpowiedz(req, res){
-    switch(req.url){
-        case '/':
-            fs.readFile(plik, (err, dane) => {
-                if(!err){
-                    res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
-                    res.end(`${dane}`);
-                    console.log(`Otwarto stronę ${plik}`);
-                } else {
-                    res.writeHead(404, {'Content-Type': 'text/html'});
-                    console.dirr(err);
-                    res.end('<h3>Strona o podanym adresie nie istnieje </h3>');
-                }
-            })
-        break;
-    }
-}
+app.use('/',(req,res,next) => {
+  res.sendFile(path.join(__dirname,'public','index.html'));
+});
 
-const serwerWWW = http.createServer(odpowiedz);
-serwerWWW.listen(port, host, () => console.log(`adres to ${host}:${port}`));
+app.listen(port, () => console.log(`App is listening on port ${port}!`))
