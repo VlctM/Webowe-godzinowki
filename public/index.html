@@ -1,22 +1,30 @@
 <!DOCTYPE html>
-<html lang="Pl-pl">
-    <head>
-        <title>Webowe godzinówki</title>
-    </head>
-    <body>
-      <form method="get" action="/api">
-        <label for="username">E-mail: </label>
-        <input
-          id="email"
-          type="text"
-          name="email" />
-          <br>
-          <label for="username">Hasło: </label>
-          <input
-            id="password"
-            type="text"
-            name="password" /> <br>
-        <input type="submit" value="OK" />
-      </form>
-    </body>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logowanie</title>
+  <link rel="stylesheet" href="style.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+  <div class="otoczenie">
+    <form action="/api" method="get">
+      <h1>Login</h1>
+      <div class="input-box" >
+        <input type="text" placeholder="Username" required id="email" name="email">
+        <i class='bx bx-user'></i>
+      </div>
+      <div class="input-box">
+        <input type="password" placeholder="password" required id="password" name="password">
+        <i class='bx bx-lock-alt' ></i>
+      </div>
+      <div class="zapamietaj">
+        <label><input type="checkbox">zapamietaj mnie</label>
+      </div>
+      <button type="submit" class="button">Login</button>
+    </form>
+  </div>
+ 
+</body>
 </html>
