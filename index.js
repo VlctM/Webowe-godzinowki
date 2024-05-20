@@ -46,14 +46,20 @@ app.post('/mainpage', (req, res) => {
 
 app.use(cookieParser());
 app.use('/',(req,res,next) => {
-    db.get("SELECT email, first_name, last_name, role_id, dzial_id FROM users WHERE session_cookie = ?", req.cookies.session_cookie, (err, row) => {
+    var sql = `SELECT u.email, u.first_name, u.last_name, u.role_id, GROUP_CONCAT(d.name) AS dzialy_names
+        FROM users u
+        JOIN users_dzialy ud ON u.id = ud.user_id
+        JOIN dzialy d ON ud.dzial_id = d.id
+        WHERE u.session_cookie = ?
+    `;
+    db.get(sql, req.cookies.session_cookie, (err, row) => {
         if(!row) return res.render("index", {errorMessage: ''});
         return res.render("main_page", {
             email: row.email,
             first_name: row.first_name,
             last_name: row.last_name,
             role_id: row.role_id,
-            dzial_id: row.dzial_id
+            dzialy_names: row.dzialy_names
         });
     });
 });

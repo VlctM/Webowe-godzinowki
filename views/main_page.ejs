@@ -23,19 +23,34 @@
             </div>
         </nav>
         <aside id="aside">
-            <script>
-                var dzial_id = "<%= dzial_id %>";
-                console.dir(dzial_id);
-                if(dzial_id.includes(',')) var dzialy = dzial_id.split(',');
-                console.log(dzialy);
-                document.getElementById("aside").innerHTML = "lelelele \
-                aa \
-                ";
-            </script>
+
         </aside>
         <main>
-            <div>
+            <div id="content">
             </div>
         </main>
     </body>
 </html>
+
+<script>
+    var dzialy = "<%= dzialy_names %>".split(',');
+    dzialy.forEach(function(el) {
+        document.getElementById("aside").innerHTML += `
+            <button onclick="toggleVisibility('${el}')">${el}<br></button>
+        `;
+
+        document.getElementById("content").innerHTML += `
+            <div id="${el}" class="dzial">
+                dziau ${el}<br>
+            </div>
+        `;
+    });
+    function toggleVisibility(element) {
+        var lel = document.getElementsByClassName("dzial")
+        Array.from(lel).forEach(function(le) {
+            le.style.visibility = "hidden";
+        });
+        document.getElementById(element).style.visibility = "visible";
+    }
+</script>
+<script src="main_page.js">

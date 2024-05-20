@@ -43,9 +43,13 @@ main {
     grid-area: main;
     padding: 15px;
 }
-main div {
+main > div {
     height: 100%;
     width: 100%;
     background-color: #F808;
     border-radius: 50px;
+}
+.dzial {
+    visibility: hidden;
+    position: absolute;
 }
