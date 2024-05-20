@@ -1,9 +1,41 @@
 <!DOCTYPE html>
-<html lang="Pl-pl">
+<html lang="pl">
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Webowe godzinówki</title>
+        <link rel="stylesheet" href="main_page.css">
     </head>
     <body>
-        
+        <nav>
+            <button>Trwające projekty</button>
+            <button>Zakończone projekty</button>
+            <div id="navbar_right">
+                <span>Witaj, <%= first_name %> <%= last_name %></span>
+                <button onclick="logout()">Wyloguj się</button>
+                <script>
+                    function logout() {
+                        console.log("really?");
+                        document.cookie = "session_cookie=;path=/;expires=" + new Date(0).toUTCString();
+                        window.location.replace("/");
+                    }
+                </script>
+            </div>
+        </nav>
+        <aside id="aside">
+            <script>
+                var dzial_id = "<%= dzial_id %>";
+                console.dir(dzial_id);
+                if(dzial_id.includes(',')) var dzialy = dzial_id.split(',');
+                console.log(dzialy);
+                document.getElementById("aside").innerHTML = "lelelele \
+                aa \
+                ";
+            </script>
+        </aside>
+        <main>
+            <div>
+            </div>
+        </main>
     </body>
 </html>

@@ -1,0 +1,51 @@
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+
+    display: grid;
+    grid-template-areas: 
+        "nav   nav "
+        "aside main";
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 20vh auto;
+
+    background: url(visimind.jpg)no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+nav {
+    grid-area: nav;
+    background-color: #F808;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+nav button {
+    float: left;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+#navbar_right {
+    float: right;
+}
+#navbar_right * {
+    float: left;
+    margin-right: 10px;
+}
+
+aside {
+    grid-area: aside;
+    background-color: #F808;
+}
+
+main {
+    grid-area: main;
+    padding: 15px;
+}
+main div {
+    height: 100%;
+    width: 100%;
+    background-color: #F808;
+    border-radius: 50px;
+}
