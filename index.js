@@ -14,7 +14,12 @@ app.use(express.static(path.join(__dirname,'views')));
 
 const db = new sqlite3.Database("godzinowki.db");
 app.post('/mainpage', (req, res) => {
-    var sql = "SELECT email, first_name, last_name, role_id, dzial_id, password FROM users WHERE email = ?";
+    var sql = `SELECT u.email, u.first_name, u.last_name, u.role_id, u.password, GROUP_CONCAT(d.name) AS dzialy_names
+        FROM users u
+        JOIN users_dzialy ud ON u.id = ud.user_id
+        JOIN dzialy d ON ud.dzial_id = d.id
+        WHERE u.email = ?
+    `;
     var params = [req.body.email];
     db.get(sql, params, (err, row) => {
         if(!row) return res.render("index", {errorMessage: "Użytkownik nie istnieje"});
@@ -36,7 +41,7 @@ app.post('/mainpage', (req, res) => {
                     first_name: row.first_name,
                     last_name: row.last_name,
                     role_id: row.role_id,
-                    dzial_id: row.dzial_id
+                    dzialy_names: row.dzialy_names
                 });
             }
             return res.render("index", {errorMessage: "Złe hasło"});
@@ -53,7 +58,7 @@ app.use('/',(req,res,next) => {
         WHERE u.session_cookie = ?
     `;
     db.get(sql, req.cookies.session_cookie, (err, row) => {
-        if(!row) return res.render("index", {errorMessage: ''});
+        if(!row.dzialy_names) return res.render("index", {errorMessage: ''});
         return res.render("main_page", {
             email: row.email,
             first_name: row.first_name,

@@ -15,7 +15,6 @@
                 <button onclick="logout()">Wyloguj się</button>
                 <script>
                     function logout() {
-                        console.log("really?");
                         document.cookie = "session_cookie=;path=/;expires=" + new Date(0).toUTCString();
                         window.location.replace("/");
                     }
