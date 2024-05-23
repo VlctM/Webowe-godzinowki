@@ -12,7 +12,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname,'views')));
 
-const db = new sqlite3.Database("godzinowki.db");
+const db = new sqlite3.Database("godzinowki.sqlite3");
 app.post('/mainpage', (req, res) => {
     var sql = `SELECT u.email, u.first_name, u.last_name, u.role_id, u.password, GROUP_CONCAT(d.name) AS dzialy_names
         FROM users u
