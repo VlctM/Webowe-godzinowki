@@ -10,6 +10,14 @@
         <nav>
             <button>Trwające projekty</button>
             <button>Zakończone projekty</button>
+            <% if(role_id == 1 || role_id == 3) { %>
+                <button onclick="addProject()">Utwórz nowy projekt</button>
+            <% } %>
+            <script>
+                function addProject() {
+
+                }
+            <\script>
             <div id="navbar_right">
                 <span>Witaj, <%= first_name %> <%= last_name %></span>
                 <button onclick="logout()">Wyloguj się</button>

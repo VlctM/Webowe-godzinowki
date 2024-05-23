@@ -4,3 +4,5 @@ INSERT INTO users
     ('kadry@example.com',        '$2b$12$O90zuy3tmLWjpOzrsKaDpehVRglkgjrM43HNJh5AnP3.9hbxx6zF6', 'Anna', 'Nowak',          2, 0),
     ('menedżerowie@example.com', '$2b$12$ac6iqVmnaCpaDuM0Ek2CTedqnHj8Q2.Tpo.cZC9.FT0o/MDdFK..u', 'Michał', 'Wiśniewski',   3, 0),
     ('pracownicy@example.com',   '$2b$12$GIAhfj2zE/361DS3zklz6eEQz9cwNxuIwNqGx9v/JlLzFeIxFcIGS', 'Katarzyna', 'Zielińska', 4, 0);
+
+-- hasła: admin, kadry, management, pracownik
