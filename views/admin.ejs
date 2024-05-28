@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+      <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div id = "container">
+    <% if(role_id == 1 || role_id == 2) { %>
+        <form action="/new_project" method="post">
+            <input
+                type="text"
+                name="project_name"
+                required >
+                <button type="submit" class="button">Dodaj kod projektu</button>
+                <center><span style="color: red;"><%= errorMessage %></span></center>
+        </form>
+    <% } %>
+    <% if(role_id == 1 || role_id == 3) { %>
+        <form action="/new_project">
+            <input
+                type="text"
+                name="dunno"
+                required >
+                <button type="submit" class="button">Utwórz godzinówkę</button>
+        </form>
+    <% } %>
+    </div>
+</body>

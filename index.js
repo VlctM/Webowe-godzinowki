@@ -11,6 +11,7 @@ const port = 8080;
 app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname,'views')));
+app.use(cookieParser());
 
 const db = new sqlite3.Database("godzinowki.sqlite3");
 app.post('/mainpage', (req, res) => {
@@ -49,11 +50,36 @@ app.post('/mainpage', (req, res) => {
     });
 });
 
-app.use('/new_project',(req,res) => {
-    return res.render("new_project");
+app.use('/admin',(req,res) => {
+    db.get('SELECT role_id FROM users WHERE session_cookie = ?', req.cookies.session_cookie, (err, row) => {
+        return res.render("admin", {
+            role_id: row.role_id,
+            errorMessage: ""
+        });
+    });
 });
 
-app.use(cookieParser());
+app.use('/new_project',(req,res) => {
+    db.run("INSERT INTO projects (name) VALUES (?)", req.body.project_name, (err) => {
+        if(err && err.code == "SQLITE_CONSTRAINT") {
+            db.get('SELECT role_id FROM users WHERE session_cookie = ?', req.cookies.session_cookie, (err, row) => {
+                return res.render("admin", {
+                    role_id: row.role_id,
+                    errorMessage: "Kod projektu już istnieje"
+                });
+            });
+        }
+        else {
+            db.get('SELECT role_id FROM users WHERE session_cookie = ?', req.cookies.session_cookie, (err, row) => {
+                return res.render("admin", {
+                    role_id: row.role_id,
+                    errorMessage: ""
+                });
+            });
+        }
+    });
+});
+
 app.use('/',(req,res,next) => {
     var sql = `SELECT u.email, u.first_name, u.last_name, u.role_id, GROUP_CONCAT(d.name) AS dzialy_names
         FROM users u

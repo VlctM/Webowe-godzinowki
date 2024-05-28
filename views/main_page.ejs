@@ -10,12 +10,12 @@
         <nav>
             <button>Trwające projekty</button>
             <button>Zakończone projekty</button>
-            <% if(role_id == 1 || role_id == 3) { %>
-                <button onclick="addProject()">Utwórz nowy projekt</button>
+            <% if(role_id != 4) { %>
+                <button onclick="adminPanel()">Panel administracyjny</button>
             <% } %>
             <script>
-                function addProject() {
-                    document.getElementById("content").src = "new_project";
+                function adminPanel() {
+                    document.getElementById("content").src = "admin";
                 }
             </script>
             <div id="navbar_right">
@@ -37,26 +37,3 @@
         </main>
     </body>
 </html>
-
-<script>
-    var dzialy = "<%= dzialy_names %>".split(',');
-    dzialy.forEach(function(el) {
-        document.getElementById("aside").innerHTML += `
-            <button onclick="toggleVisibility('${el}')">${el}<br></button>
-        `;
-
-        document.getElementById("content").innerHTML += `
-            <div id="${el}" class="dzial">
-                dziau ${el}<br>
-            </div>
-        `;
-    });
-    function toggleVisibility(element) {
-        var lel = document.getElementsByClassName("dzial")
-        Array.from(lel).forEach(function(le) {
-            le.style.visibility = "hidden";
-        });
-        document.getElementById(element).style.visibility = "visible";
-    }
-</script>
-<script src="main_page.js">
