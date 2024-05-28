@@ -49,6 +49,10 @@ app.post('/mainpage', (req, res) => {
     });
 });
 
+app.use('/new_project',(req,res) => {
+    return res.render("new_project");
+});
+
 app.use(cookieParser());
 app.use('/',(req,res,next) => {
     var sql = `SELECT u.email, u.first_name, u.last_name, u.role_id, GROUP_CONCAT(d.name) AS dzialy_names

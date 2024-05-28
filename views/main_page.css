@@ -43,13 +43,11 @@ main {
     grid-area: main;
     padding: 15px;
 }
-main > div {
-    height: 100%;
-    width: 100%;
+iframe {
+    height: 84%;
+    width: 92%;
     background-color: #F808;
-    border-radius: 50px;
-}
-.dzial {
-    visibility: hidden;
-    position: absolute;
+    border-radius: 4%;
+    padding: 4%;
+    border: none;
 }
