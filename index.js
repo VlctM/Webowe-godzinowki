@@ -55,6 +55,15 @@ app.post('/mainpage', async (req, res) => {
     });
 });
 
+app.use('/active_projects', (req,res) => {
+    db.get("SELECT * FROM projects WHERE end_date IS NULL", (err,row) => {
+        return res.render("active_projects", {
+            project_ids: row.id,
+            project_names: row.name
+        });
+    });
+});
+
 app.use('/admin', async (req,res) => {
     emailsRow = await new Promise((resolve, reject) => {
     db.get('SELECT GROUP_CONCAT(email) as emails FROM users WHERE fired = 0', (err, row) => {
