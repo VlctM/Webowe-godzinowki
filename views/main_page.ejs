@@ -9,7 +9,7 @@
     <body>
         <nav>
             <button onclick="activeProjects()">Trwające projekty</button>
-            <button>Zakończone projekty</button>
+            <button onclick="finishedProjects()">Zakończone projekty</button>
             <% if(role_id != 4) { %>
                 <button onclick="adminPanel()">Panel administracyjny</button>
             <% } %>
@@ -19,6 +19,9 @@
                 }
                 function activeProjects() {
                     document.getElementById("content").src = "active_projects";
+                }
+                function finishedProjects() {
+                    document.getElementById("content").src = "finished_projects";
                 }
             </script>
             <div id="navbar_right">

@@ -57,7 +57,15 @@ app.post('/mainpage', async (req, res) => {
 
 app.use('/active_projects', (req,res) => {
     db.get("SELECT * FROM projects WHERE end_date IS NULL", (err,row) => {
-        return res.render("active_projects", {
+        return res.render("projects", {
+            project_ids: row.id,
+            project_names: row.name
+        });
+    });
+});
+app.use('/finished_projects', (req,res) => {
+    db.get("SELECT * FROM projects WHERE end_date IS NOT NULL", (err,row) => {
+        return res.render("projects", {
             project_ids: row.id,
             project_names: row.name
         });
