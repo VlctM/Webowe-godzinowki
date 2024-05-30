@@ -42,7 +42,8 @@ CREATE TABLE project_users(
 user_id INTEGER NOT NULL,
 project_id INTEGER NOT NULL,
 foreign key(user_id) references users(id),
-foreign key(project_id) references projects(id)
+foreign key(project_id) references projects(id),
+unique(user_id, project_id)
 );
 
 CREATE TABLE userWorkDetails(

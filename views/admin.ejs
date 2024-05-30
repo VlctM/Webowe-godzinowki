@@ -11,17 +11,29 @@
                 type="text"
                 name="project_name"
                 required >
-                <button type="submit" class="button">Dodaj kod projektu</button>
-                <center><span style="color: red;"><%= errorMessage %></span></center>
+            <button type="submit" class="button">Dodaj kod projektu</button>
+            <center><span style="color: red;"><%= errorMessage %></span></center>
         </form>
     <% } %>
     <% if(role_id == 1 || role_id == 3) { %>
-        <form action="/new_project">
+        <form action="/add_workers" method="post">
             <input
                 type="text"
-                name="dunno"
+                name="project"
+                placeholder="kod projektu"
                 required >
-                <button type="submit" class="button">Utwórz godzinówkę</button>
+            <textarea 
+                name="workersText"
+                placeholder="admin@example.com,pracownik@example.com [...]"
+            ></textarea>
+            <center>lub</center>
+            <select name="workers" size="3" multiple>
+                <% emails.forEach(function(email) { %>
+                    <option value="<%= email %>"><%= email %></option>
+                <% }); %>
+            </select>
+            <button type="submit" class="button">Przydziel pracowników do projektu</button>
+            <center><span style="color: red;"><%= errorMessage1 %></span></center>
         </form>
     <% } %>
     </div>
