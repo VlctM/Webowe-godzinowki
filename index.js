@@ -56,6 +56,9 @@ app.post('/mainpage', async (req, res) => {
 });
 
 app.use('/active_projects', (req,res) => {
+    db.get("SELECT role_id FROM users WHERE session_cookie = ?", req.cookies.session_cookie, (err, row) => {
+        if(row.role_id == 1 || row.role_id == 2) {}
+    });
     db.get("SELECT * FROM projects WHERE end_date IS NULL", (err,row) => {
         return res.render("projects", {
             project_ids: row.id,
