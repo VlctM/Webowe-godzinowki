@@ -1,0 +1,4 @@
+INSERT INTO projects
+    (name, end_date) VALUES
+    ('projekt rozpoczęty', NULL),
+    ('projekt zakończony', 2460461.186760);
