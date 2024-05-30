@@ -1,4 +1,0 @@
-select u.role_id from users u
-join project_users pu on pu.user_id = u.id;
-
-select * from project_users;
