@@ -59,18 +59,18 @@ app.use('/active_projects', (req,res) => {
     db.get("SELECT role_id FROM users WHERE session_cookie = ?", req.cookies.session_cookie, (err, row) => {
         if(row.role_id == 1 || row.role_id == 2) {}
     });
-    db.get("SELECT * FROM projects WHERE end_date IS NULL", (err,row) => {
+    db.get("SELECT GROUP_CONCAT(id) AS ids, GROUP_CONCAT(name) AS names FROM projects WHERE end_date IS NULL", (err,row) => {
         return res.render("projects", {
-            project_ids: row.id,
-            project_names: row.name
+            project_ids: row.ids,
+            project_names: row.names.split(',')
         });
     });
 });
 app.use('/finished_projects', (req,res) => {
-    db.get("SELECT * FROM projects WHERE end_date IS NOT NULL", (err,row) => {
+    db.get("SELECT GROUP_CONCAT(id) AS ids, GROUP_CONCAT(name) AS names FROM projects WHERE end_date IS NOT NULL", (err,row) => {
         return res.render("projects", {
-            project_ids: row.id,
-            project_names: row.name
+            project_ids: row.ids,
+            project_names: row.names.split(',')
         });
     });
 });

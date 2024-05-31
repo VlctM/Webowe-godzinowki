@@ -1,17 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-      <link rel="stylesheet" href="active_projects.css">
+      <link rel="stylesheet" href="projects.css">
 </head>
 <body>
-    <% if(Array.isArray(project_ids)) project_ids.forEach(function(email) { %>
+    <% project_names.forEach(function(project) { %>
         <div class="box">
-            <span> <%= project_names %> </span>
+            <span><%= project %></span>
         </div>
-    <% }); else { %> 
-        <div class="box">
-            <span> <%= project_names %> </span>
-        </div>
-    <% } %>
+    <% }); %>
 </body>
 </html>
