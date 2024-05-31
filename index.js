@@ -57,21 +57,80 @@ app.post('/mainpage', async (req, res) => {
 
 app.use('/active_projects', (req,res) => {
     db.get("SELECT role_id FROM users WHERE session_cookie = ?", req.cookies.session_cookie, (err, row) => {
-        if(row.role_id == 1 || row.role_id == 2) {}
-    });
-    db.get("SELECT GROUP_CONCAT(id) AS ids, GROUP_CONCAT(name) AS names FROM projects WHERE end_date IS NULL", (err,row) => {
-        return res.render("projects", {
-            project_ids: row.ids,
-            project_names: row.names.split(',')
-        });
+        if(row.role_id == 1 || row.role_id == 2) {
+            db.get("SELECT GROUP_CONCAT(id) AS ids, GROUP_CONCAT(name) AS names FROM projects WHERE end_date IS NULL", (err,row) => {
+                if(row.ids) {
+                        return res.render("projects", {
+                        project_ids: row.ids,
+                        project_names: row.names.split(',')
+                    });
+                } else {
+                    return res.render("projects", {
+                        project_ids: "",
+                        project_names: [""]
+                    });
+                }
+            });
+        }
+        else {
+            sql = `SELECT GROUP_CONCAT(p.id) AS ids, GROUP_CONCAT(p.name) AS names
+                FROM projects p
+                JOIN project_users pu ON pu.project_id = p.id
+                JOIN users u ON pu.user_id = u.id
+                WHERE u.session_cookie = ? AND p.end_date IS NULL`
+            db.get(sql, req.cookies.session_cookie, (err,row) => {
+                if(row.ids) {
+                    return res.render("projects", {
+                        project_ids: row.ids,
+                        project_names: row.names.split(',')
+                    });
+                } else {
+                    return res.render("projects", {
+                        project_ids: "",
+                        project_names: [""]
+                    });
+                }
+            });
+        }
     });
 });
 app.use('/finished_projects', (req,res) => {
-    db.get("SELECT GROUP_CONCAT(id) AS ids, GROUP_CONCAT(name) AS names FROM projects WHERE end_date IS NOT NULL", (err,row) => {
-        return res.render("projects", {
-            project_ids: row.ids,
-            project_names: row.names.split(',')
-        });
+    db.get("SELECT role_id FROM users WHERE session_cookie = ?", req.cookies.session_cookie, (err, row) => {
+        if(row.role_id == 1 || row.role_id == 2) {
+            db.get("SELECT GROUP_CONCAT(id) AS ids, GROUP_CONCAT(name) AS names FROM projects WHERE end_date IS NOT NULL", (err,row) => {
+                if(row.ids) {
+                        return res.render("projects", {
+                        project_ids: row.ids,
+                        project_names: row.names.split(',')
+                    });
+                } else {
+                    return res.render("projects", {
+                        project_ids: "",
+                        project_names: [""]
+                    });
+                }
+            });
+        }
+        else {
+            sql = `SELECT GROUP_CONCAT(p.id) AS ids, GROUP_CONCAT(p.name) AS names
+                FROM projects p
+                JOIN project_users pu ON pu.project_id = p.id
+                JOIN users u ON pu.user_id = u.id
+                WHERE u.session_cookie = ? AND p.end_date IS NOT NULL`
+            db.get(sql, req.cookies.session_cookie, (err,row) => {
+                if(row.ids) {
+                    return res.render("projects", {
+                        project_ids: row.ids,
+                        project_names: row.names.split(',')
+                    });
+                } else {
+                    return res.render("projects", {
+                        project_ids: "",
+                        project_names: [""]
+                    });
+                }
+            });
+        }
     });
 });
 
@@ -172,12 +231,12 @@ app.use('/add_workers', async (req,res) => {
             }
         } else {
             id_for_email = await new Promise((resolve, reject) => {
-                db.get("SELECT id FROM users WHERE email = '?'", flattenedAllWorkers, (err, row) => {
+                db.get("SELECT id FROM users WHERE email = ?", flattenedAllWorkers, (err, row) => {
                         resolve(row.id);
                 });
             });
 
-            db.run("INSERT INTO project_users (project_id, user_id) VALUES ('?','?')", id_for_project, id_for_email);
+            db.run("INSERT INTO project_users (project_id, user_id) VALUES (?,?)", id_for_project, id_for_email);
         }
 
         return res.render("admin", {
